@@ -114,10 +114,10 @@ var plantillaRestaurantes =
 var mostrarRestaurantes = function (restaurantes) {
              var plantillaFinal = "";
              restaurantes.forEach(function (restaurante) {
-                 plantillaFinal += plantillaRestaurantes.replace("__titulo__", restaurantes.titulo)
-                     .replace("__kind__", restaurantes.kind)
-                     .replace("__img__", restaurantes.img)
-                     .replace("__ubicacion__", restaurantes.ubicacion);
+                 plantillaFinal += plantillaRestaurantes.replace("__titulo__", restaurante.titulo)
+                     .replace("__kind__", restaurante.kind)
+                     .replace("__img__", restaurante.img)
+                     .replace("__ubicacion__", restaurante.ubicacion);
              });
              $("#restaurantes").html(plantillaFinal);
          };
