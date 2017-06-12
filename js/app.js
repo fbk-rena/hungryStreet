@@ -24,3 +24,7 @@ var mostrarMapa = function (coordenadas) {
       map: mapa
     });
 }
+
+$(document).ready(function() {
+    $('select').material_select();
+  });
