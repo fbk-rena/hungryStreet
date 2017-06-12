@@ -1,6 +1,7 @@
 var cargarPagina = function () {
     $('select').material_select();
 	$("#search-form").submit(filtrarRestaurantes);
+    $(document).on("click", ".ubicacion-restaurante",cambiarUbicacion);
     mostrarRestaurantes(restaurantes);  
 }; 
 
@@ -30,6 +31,40 @@ var obtenerUbicacion = function (e) {
          map: mapa
      });
  }
+ 
+var cambiarUbicacion = function () {
+  var longitud = $(this).data("longitud");
+  var latitud = $(this).data("latitud");
+
+  var coordenadas = {
+    lat: latitud,
+    lng: longitud
+  };
+
+  mostrarMapa(coordenadas);
+}
+var mostrarMapa = function (coordenadas) {
+    var mapa = new google.maps.Map($('.mapa')[0], {
+      zoom: 18,
+      center: coordenadas
+    });
+    var marcadorPosicion = new google.maps.Marker({
+      position: coordenadas,
+      map: mapa
+    });
+}
+
+var cambiarUbicacion = function () {
+  var longitud = $(this).data("longitud");
+  var latitud = $(this).data("latitud");
+
+  var coordenadas = {
+    lat: latitud,
+    lng: longitud
+  };
+
+  mostrarMapa(coordenadas);
+}
 
  /*var restaurantes = function restaurante(nombre, foto, tipo, direccion, coordenadas) {
      this.titulo = nombre;
@@ -126,6 +161,8 @@ var mostrarRestaurantes = function (restaurantes) {
              var restauranteMostrar = "";
              restaurantes.forEach(function (restaurante) {
                  plantillaFinal += plantillaRestaurantes.replace("__titulo__", restaurante.titulo)
+                    .replace("__latitud__", restaurante.coordenadas.lat)
+                    .replace("__longitud__", restaurante.coordenadas.lng)
                     .replace("__kind__", restaurante.kind)
                     .replace("__value__", restaurante.value)
                     .replace("__img__", restaurante.img)
