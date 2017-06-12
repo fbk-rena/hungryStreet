@@ -12,7 +12,7 @@
 
 ##Versión 0.3.0
 
--Filtrar la lista de restaurantes en base a un texto ingresado (pueden escoger el criterio de búsqueda: tipo de comida, nombre de restaurante, dirección, etc.).
+-[x]Filtrar la lista de restaurantes en base a un texto ingresado (pueden escoger el criterio de búsqueda: tipo de comida, nombre de restaurante, dirección, etc.).
 
 ##Versión 0.4.0
 
