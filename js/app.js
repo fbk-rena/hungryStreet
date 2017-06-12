@@ -1,4 +1,10 @@
- var obtenerUbicacion = function (e) {
+var cargarPagina = function () {
+    $('select').material_select();
+	$("#search-form").submit(filtrarRestaurantes);
+    mostrarRestaurantes(restaurantes);  
+}; 
+
+var obtenerUbicacion = function (e) {
      if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(mostrarPosicion);
      } else {
@@ -16,7 +22,7 @@
 
  var mostrarMapa = function (coordenadas) {
      var mapa = new google.maps.Map($('#map')[0], {
-         zoom: 9,
+         zoom: 15,
          center: coordenadas
      });
      var marker = new google.maps.Marker({
@@ -46,6 +52,7 @@
          {
              "titulo": "Boba Fusion Tea Bar",
              "kind": "cafesito",
+              "value": "2",
              "img": "assetes/bobatea.jpg",
              "ubicacion": "Dirección: Alvaro Obregón 233 C, Roma Norte, 06700 México, CDMX",
              "coordenadas": {
@@ -56,6 +63,7 @@
          {
              "titulo": "Jetsons",
              "kind": "comida",
+              "value": "1",
              "img": "assetes/Jetsons-2.jpg",
              "ubicacion": "Dirección: Av. Álvaro Obregón 291, Roma Nte., 06700 Ciudad de México, CDMX",
              "coordenadas": {
@@ -66,6 +74,7 @@
          {
              "titulo": "Papa Guapa",
              "kind": "comida",
+              "value": "1",
              "img": "assetes/papaGuapa.jpg",
              "ubicacion": "Dirección: Calle Orizaba 4, Local B, Cuauhtémoc, Roma Norte, 06700 Ciudad de México, CDMX",
              "coordenadas": {
@@ -76,6 +85,7 @@
          {
              "titulo": "Pizzas del Perro Negro",
              "kind": "comida",
+              "value": "1",
              "img": "assetes/perro.jpg",
              "ubicacion": "Calle Orizaba 4, Local B, Cuauhtémoc, Roma Norte, 06700 Ciudad de México, CDMX",
              "coordenadas": {
@@ -86,6 +96,7 @@
          {
              "titulo": "Pasteleria Suiza",
              "kind": "cafesito",
+             "value": "2",
              "img": "assetes/suiza.jpg",
              "ubicacion": "Dirección: Parque España 7, Condesa, 06140 Ciudad de México, CDMX ",
              "coordenadas": {
@@ -97,7 +108,7 @@
 ];
 var plantillaRestaurantes =
              " <div class='col s12 m6'>" +
-             "<h2 class='header'>__titulo__</h2>" +
+             "<h2 class='header' value= '__value__'>__titulo__</h2>" +
              "<div class='card horizontal'>" +
              "<div>" +
              "<img src='__img__' alt='Contact' class='fotoRestaurante responsive-img'>" +
@@ -112,16 +123,26 @@ var plantillaRestaurantes =
              "</div>";
 
 var mostrarRestaurantes = function (restaurantes) {
-             var plantillaFinal = "";
+             var restauranteMostrar = "";
              restaurantes.forEach(function (restaurante) {
                  plantillaFinal += plantillaRestaurantes.replace("__titulo__", restaurante.titulo)
-                     .replace("__kind__", restaurante.kind)
-                     .replace("__img__", restaurante.img)
-                     .replace("__ubicacion__", restaurante.ubicacion);
+                    .replace("__kind__", restaurante.kind)
+                    .replace("__value__", restaurante.value)
+                    .replace("__img__", restaurante.img)
+                    .replace("__ubicacion__", restaurante.ubicacion);
              });
-             $("#restaurantes").html(plantillaFinal);
+             $("#restaurantes").html(restauranteMostrar);
          };
 
-$(document).ready(function () {
-             $('select').material_select();
-         });
+
+
+var filtrarRestaurantes = function (e) {
+	e.preventDefault();
+	var busqueda = $("#search").val().toLowerCase();
+	var nombreFiltrado = restaurantes.filter(function (restaurante) {
+		return restaurante.nombre.toLowerCase().indexOf(busqueda) >= 0;
+	});
+    mostrarRestaurantes(nombreFiltrado);
+};
+
+$(document).ready(cargarPagina);
